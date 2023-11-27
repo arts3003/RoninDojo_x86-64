@@ -1,0 +1,144 @@
+# RoninDojo_x86-64
+## Descripción
+Pasos para instalar RoninDojo en sistema con CPU Intel/AMD (x86_64)
+RoninDojo es un nodo Bitcoin on-chain con las herramientas incluidas del equipo de Samourai wallet y un entorno web muy amigable y sencillo de usar que hace que la experiencia de usuario sea toda una delicia.
+RoninDojo tiene dos modos para interactuar con él:
+- Modo web (RoninUI) - A través de tu navegador web (siempre desde otro PC), accedes a todo un panel de gestión/administración
+- Modo terminal - a través de loggearte con el usuario "ronindojo" accedes a un menú para la gestion/administración completa desde la consola del sistema linux ya sea en local (con tu pantalla, teclado y ratón) como accediendo desde otro pc a través de SSH.
+
+Indicar que previamente antes de poder hacer uso por terminal, hay que acceder via web pues la primera vez es cuando se crea ese password al usuario "ronindojo" que será luego necesario para poder acceder desde el modo terminal, esto se vé en el paso 5 de la instalación.
+
+
+### Aviso
+indicar que RoninDojo en un PC no es perfecto al 100%. Se ha descubierto, gracias a pruebas de otros usuarios, cómo la opción de BackUp romperia el sistema. No hay mayor problema sino se usa, y si quieres hacer un backup del sistema, recomendaria usar herramientas como Rescuezilla: https://github.com/rescuezilla/rescuezilla
+
+
+## Configuración Previa del Hardware
+Un PC con procesador intel core i5 6500 o similar con un minimo de 8GB de RAM es suficientemente potente y equilibrado para mover con soltura el nodo, el salto a procesadores más actuales siempre viene bien pero no es algo que realmente se tenga una apreciación notable, sin embargo, en las unidades de disco si que es notable su rendimiento.
+Máquinas o equipos a tener como referencia por su estabilidad y rendimiento y que se pueden conseguir a buen precio en el mercado como reacondicionados son:
+
+- HP EliteDesk 800 G2/G3 
+- Lenovo ThinkCentre M900
+- Dell OptiPlex 7040 Mini
+
+Video sobre cómo es el HP EliteDesk 800 G2: https://youtu.be/lp53-_6WI1A
+
+## Configuración Previa del Hardware
+La máquina tiene que disponer de dos discos, pero exactamente este tipo de discos y configurados de esa forma, la capacidad la que querais, con unos minimos, claro:
+- Disco SATA (para sistema operativo, capacidad minima de 100GB)
+- Disco NVMe M.2 (para datos, capacidad minima 1TB, muy recomendado 2TB)
+
+A modo de ejemplo, pongo dos modelos de configuración, uno válido y el otro no, observar como el "no válido" son dos discos SATA, reconocidos por linux como sda y sdb. Esta última configuración se suele disponer en muchos equipos y lamentablemente, hasta el momento, no es posible hacer la instalación de RoninDojo de forma corr
+
+### VÁLIDO
+![image](https://github.com/albercoin/RoninDojo_x86-64/assets/68326029/5efb79d7-cc5e-424d-9b70-6d3ab6ad2e25)
+![image](https://github.com/albercoin/RoninDojo_x86-64/assets/68326029/1b910463-ad8f-4cbb-99a6-e68f0616952e)
+
+### NO VÁLIDO
+![image](https://github.com/albercoin/RoninDojo_x86-64/assets/68326029/0dc330bd-e18f-441b-87ed-82720b838445)
+
+
+
+## Paso 1 - Flashear USB con Debian 11.x
+- Descargar la imagen de Linux Debian 11.x (actualmente 11.8)
+```
+https://cdimage.debian.org/mirror/cdimage/archive/11.8.0/amd64/iso-cd/debian-11.8.0-amd64-netinst.iso
+```
+- Descargar rufus USB o balena etcher para flashear la imagen de debian en el USB
+```
+https://rufus.ie/es/
+https://github.com/pbatard/rufus/releases/download/v4.2/rufus-4.2p.exe
+
+https://etcher.balena.io/#download-etcher
+https://github.com/balena-io/etcher/releases/download/v1.18.11/balenaEtcher-Portable-1.18.11.exe
+```
+Flashear el USB, usando Rufus o Balena Etcher, la imagen de linux Debian previamente descargada.
+Aqui el video con todo detalle:
+https://youtu.be/xr9V_mNZw_I
+
+
+## Paso 2 - Instalar Debian 11.x
+Iniciar la máquina con el dispositivo USB y elegir instalación grafica, los puntos importantes en la instalación son:
+- Nombre de equipo: RoninDojo
+- Crear usuario "nodo" con password "nodo" (luego podrás cambiar el password por uno personalizado)
+- Particionado de discos (Guiado - Utilizar todo el disco)
+- Elegir el disco de instalación:
+- -- sda si tienes una config de SATA + NVMe (el NVMe tiene que ser el disco grande para datos)
+- -- sdb si tienes una config de SATA + SATA (el sda tiene que ser el disco grande para datos)
+- Selección de programas (solo dejar marcadas las siguientes casillas):
+- -- SSH Server
+- -- Utilidades estandar del sistema
+
+Una vez finalizada la instalación, se reinicia, y nos loggeamos con el usuario "root" y el password creado en la isntalación
+instalar los siguientes paquetes
+```
+apt install avahi-daemon sudo
+```
+a continuación, agregamos el usuario nodo al grupo sudo
+```
+adduser nodo sudo
+```
+nos desloggeamos, cerramos sesion
+```
+exit
+```
+Puedes ver todo el proceso de instalación detallado en este video:
+https://youtu.be/4SszxjOJg9M
+
+## Paso 3 - Ejecutar script RoninOS para x86-64
+Para iniciar la instalación de adaptación del sistema a RoninDojo, debemos ejecutar un preinstalación, lo haremos con ejecutando la siguiente linea
+```
+curl -L https://raw.githubusercontent.com/albercoin/RoninDojo_x86-64/main/roninos_x86_64.sh | sudo bash | tee roninos-debug.log
+```
+Esto ejecuta el script y se genera el fichero roninos-debug.log con los detalles de la ejecución del script para su revisión en caso de haber algún problema.
+se puede leer el fichero con el siguiente comando:
+```
+more roninos-debug.log
+```
+
+
+## Paso 4 - Iniciar el servicio de Instalación RoninDojo
+Una vez finalizado el script de preinstalación, hay que activar un servicio para iniciar la instalación (también vale reiniciando la máquina)
+```
+sudo systemctl start ronin-setup
+```
+y acto seguido para ver el proceso de instalación, ejecuta el siguiente comando pues la instalación se lleva a cabo en un segundo plano que no vamos a ver por pantalla pero que si va a ir quedando registrado en el fichero "setup.log"
+```
+tail -f /home/ronindojo/.logs/setup.log
+```
+Tendrás que esperar unos 75 segundos hasta que empieces a ver por pantalla el proceso de instalación, está programado así, no te preocupes y ponte cómodo mientras
+
+La instalación le llevará entre unos 10 a 30 minutos, depende en gran medida de la conxeión a internet y de la potencia de la máquina
+Podrás saber que ha finalizado cuando veas en pantalla lo siguiente:
+![image](https://github.com/albercoin/RoninDojo_x86-64/assets/68326029/0a689a01-6e88-4f07-983a-70cf18af509b)
+
+Entonces, para volver al prompt del sistema deberás presionar las teclas CTRL + C.
+Luego podrás cerrar la sesión con el comando "exit"
+```
+exit
+```
+Video de la instalación del paso 4
+https://youtu.be/xr9V_mNZw_I
+
+## Paso 5 - Primer acceso a ronindojo.local via web
+Abrir desde nuestro pc de escritorio un navegador web e introducir "ronindojo.local"
+- Realiza el backup del password de root
+- Crea la contraseña de ronindojo
+
+![image](https://github.com/albercoin/RoninDojo_x86-64/assets/68326029/062b5a25-182b-461d-a7d3-12e1ee800639)
+Realiza el backup del password del usuario root...
+![image](https://github.com/albercoin/RoninDojo_x86-64/assets/68326029/014f029a-da49-4771-b771-c899a3a76fc5)
+Crea la contraseña de ronindojo...
+![image](https://github.com/albercoin/RoninDojo_x86-64/assets/68326029/685d2123-1a3b-4a1e-b3b9-8647c165042d)
+Bien! una vez completado todo...
+![image](https://github.com/albercoin/RoninDojo_x86-64/assets/68326029/29906ecf-76d0-4980-aa2d-25e9408fb3d1)
+y ya por fin... 🥳
+![image](https://github.com/albercoin/RoninDojo_x86-64/assets/68326029/b33de125-1db0-40f4-818f-adae12959f83)
+
+
+## Paso 6 - Fin
+Ahora ya está RoninDojo listo, espera a que termine de descargar la blockchain y de que el indexador electrum tambien este al dia para poder funcionar de forma óptima.
+
+### DISFRUTALO!!!
+
+By Albercoin con la ayuda de mi gran estimado Arkad
