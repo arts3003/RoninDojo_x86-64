@@ -72,7 +72,7 @@ Iniciar la máquina con el dispositivo USB y elegir instalación grafica, los pu
 Una vez finalizada la instalación, se reinicia, y nos loggeamos con el usuario "root" y el password creado en la isntalación
 instalar los siguientes paquetes
 ```
-apt install avahi-daemon sudo
+apt install avahi-daemon sudo curl
 ```
 a continuación, agregamos el usuario nodo al grupo sudo
 ```
@@ -104,13 +104,14 @@ sudo systemctl start ronin-setup
 ```
 y acto seguido para ver el proceso de instalación, ejecuta el siguiente comando pues la instalación se lleva a cabo en un segundo plano que no vamos a ver por pantalla pero que si va a ir quedando registrado en el fichero "setup.log"
 ```
-tail -f /home/ronindojo/.logs/setup.log
+tail -f /home/ronindojo/.logs/setup.logs
 ```
 Tendrás que esperar unos 75 segundos hasta que empieces a ver por pantalla el proceso de instalación, está programado así, no te preocupes y ponte cómodo mientras
 
 La instalación le llevará entre unos 10 a 30 minutos, depende en gran medida de la conxeión a internet y de la potencia de la máquina
 Podrás saber que ha finalizado cuando veas en pantalla lo siguiente:
-![image](https://github.com/albercoin/RoninDojo_x86-64/assets/68326029/0a689a01-6e88-4f07-983a-70cf18af509b)
+![image](https://github.com/albercoin/RoninDojo_x86-64/assets/68326029/76811ca2-a767-4955-a4e1-725411f0cca3)
+
 
 Entonces, para volver al prompt del sistema deberás presionar las teclas CTRL + C.
 Luego podrás cerrar la sesión con el comando "exit"
@@ -125,15 +126,16 @@ Abrir desde nuestro pc de escritorio un navegador web e introducir "ronindojo.lo
 - Realiza el backup del password de root
 - Crea la contraseña de ronindojo
 
-![image](https://github.com/albercoin/RoninDojo_x86-64/assets/68326029/062b5a25-182b-461d-a7d3-12e1ee800639)
+![image](https://github.com/albercoin/RoninDojo_x86-64/assets/68326029/a5bbfdf7-ef09-4d8e-8036-a8f891af3c99)
 Realiza el backup del password del usuario root...
-![image](https://github.com/albercoin/RoninDojo_x86-64/assets/68326029/014f029a-da49-4771-b771-c899a3a76fc5)
+![image](https://github.com/albercoin/RoninDojo_x86-64/assets/68326029/518dac50-9767-4e15-abad-faf6255ea1cc)
 Crea la contraseña de ronindojo...
-![image](https://github.com/albercoin/RoninDojo_x86-64/assets/68326029/685d2123-1a3b-4a1e-b3b9-8647c165042d)
+![image](https://github.com/albercoin/RoninDojo_x86-64/assets/68326029/487fe81a-4d1e-413c-8639-852174460c07)
 Bien! una vez completado todo...
-![image](https://github.com/albercoin/RoninDojo_x86-64/assets/68326029/29906ecf-76d0-4980-aa2d-25e9408fb3d1)
+![image](https://github.com/albercoin/RoninDojo_x86-64/assets/68326029/47491363-917a-43ba-b30a-d19e066842bf)
 y ya por fin... 🥳
-![image](https://github.com/albercoin/RoninDojo_x86-64/assets/68326029/b33de125-1db0-40f4-818f-adae12959f83)
+![image](https://github.com/albercoin/RoninDojo_x86-64/assets/68326029/350b73ae-cfff-456e-8f19-b4ad5ec4edcc)
+
 
 
 ## Paso 6 - Fin
