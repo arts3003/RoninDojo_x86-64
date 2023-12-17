@@ -134,7 +134,8 @@ Crea la contraseña de ronindojo...
 Bien! una vez completado todo...
 ![image](https://github.com/albercoin/RoninDojo_x86-64/assets/68326029/47491363-917a-43ba-b30a-d19e066842bf)
 y ya por fin... 🥳
-![image](https://github.com/albercoin/RoninDojo_x86-64/assets/68326029/350b73ae-cfff-456e-8f19-b4ad5ec4edcc)
+![image](https://github.com/albercoin/RoninDojo_x86-64/assets/68326029/8a06e792-b3c5-4ac5-8d83-c4b8c4181c83)
+
 
 
 
