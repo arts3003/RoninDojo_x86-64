@@ -31,11 +31,10 @@ La máquina tiene que disponer de dos discos, pero exactamente este tipo de disc
 A modo de ejemplo, pongo dos modelos de configuración, uno válido y el otro no, observar como el "no válido" son dos discos SATA, reconocidos por linux como sda y sdb. Esta última configuración se suele disponer en muchos equipos y lamentablemente, hasta el momento, no es posible hacer la instalación de RoninDojo de forma corr
 
 ### VÁLIDO
-![image](https://github.com/albercoin/RoninDojo_x86-64/assets/68326029/5efb79d7-cc5e-424d-9b70-6d3ab6ad2e25)
-![image](https://github.com/albercoin/RoninDojo_x86-64/assets/68326029/1b910463-ad8f-4cbb-99a6-e68f0616952e)
+![image](https://github.com/albercoin/RoninDojo_x86-64/assets/68326029/740ccfb8-c290-40d0-b483-e656ac72811e)
 
 ### NO VÁLIDO
-![image](https://github.com/albercoin/RoninDojo_x86-64/assets/68326029/0dc330bd-e18f-441b-87ed-82720b838445)
+![image](https://github.com/albercoin/RoninDojo_x86-64/assets/68326029/b3ad6cd9-5919-46d1-95b1-284ecccfff1a)
 
 
 
