@@ -1,4 +1,8 @@
 # RoninDojo_x86-64
+### Articulo completo en estudiobitcoin.com
+- Español https://estudiobitcoin.com/como-instalar-el-nodo-ronindojo-en-un-pc-intel-o-amd-x86_64/
+- Inglés https://estudiobitcoin.com/how-to-install-ronindojo-pc-intel-amd-x86_64/
+
 ## Descripción
 Pasos para instalar RoninDojo en sistema con CPU Intel/AMD (x86_64)
 RoninDojo es un nodo Bitcoin on-chain con las herramientas incluidas del equipo de Samourai wallet y un entorno web muy amigable y sencillo de usar que hace que la experiencia de usuario sea toda una delicia.
