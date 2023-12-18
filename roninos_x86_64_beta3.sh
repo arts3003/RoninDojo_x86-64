@@ -277,6 +277,10 @@ _service_checks(){
 # ***********************************************************
 main(){
     # install dependencies
+
+    echo "deb http://deb.debian.org/debian bullseye-backports main contrib non-free" | sudo tee -a /etc/apt/sources.list
+    echo "deb-src http://deb.debian.org/debian bullseye-backports main contrib non-free" | sudo tee -a /etc/apt/sources.list
+    
     apt-get update
     apt-get install -y man-db git avahi-daemon nginx openjdk-11-jdk tor fail2ban net-tools htop unzip wget ufw rsync jq python3 python3-pip pipenv gdisk gcc curl apparmor ca-certificates gnupg lsb-release dialog bpytop
     apt-get install -y tor/bullseye-backports #install 0.4.7.x tor
