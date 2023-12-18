@@ -5,7 +5,7 @@ useradd -s /bin/bash -m -c "ronindojo" ronindojo -p rock
 useradd -c "tor" tor && echo "ronindojo    ALL=(ALL) ALL" >> /etc/sudoers
 
 #removes the first user login requirement with monitor and keyboard
-rm /root/.not_logged_in_yet 
+rm /root/.not_logged_in_yet &>/dev/null
 
 echo "set hostname"
 hostname -b "ronindebian"
