@@ -111,7 +111,7 @@ _prep_install(){
     apt-get install -y ca-certificates curl gnupg
     mkdir -p /etc/apt/keyrings
     curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
-    NODE_MAJOR=16
+    NODE_MAJOR=21
     echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
     apt-get update
     apt-get install nodejs -y
@@ -282,8 +282,9 @@ main(){
     echo "deb-src http://deb.debian.org/debian bullseye-backports main contrib non-free" | tee -a /etc/apt/sources.list
     
     apt-get update
-    apt-get install -y man-db git avahi-daemon nginx openjdk-11-jdk tor fail2ban net-tools htop unzip wget ufw rsync jq python3 python3-pip pipenv gdisk gcc curl apparmor ca-certificates gnupg lsb-release dialog bpytop
-    apt-get install -y tor/bullseye-backports #install 0.4.7.x tor
+    apt-get install -y man-db git avahi-daemon nginx openjdk-11-jdk fail2ban net-tools htop unzip wget ufw rsync jq python3 python3-pip pipenv gdisk gcc curl apparmor ca-certificates gnupg lsb-release dialog bpytop
+    apt-get install -y tor/bullseye-backports 
+    
     # clone the original RoninOS
     git clone https://code.samourai.io/ronindojo/RoninOS.git /tmp/RoninOS
 
