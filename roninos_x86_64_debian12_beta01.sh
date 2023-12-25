@@ -114,7 +114,7 @@ _prep_install(){
     NODE_MAJOR=16
     echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
     apt-get update
-    apt-get install nodejs -y
+    apt-get install nodejs npm -y
 
     # install pm2 
     npm install pm2 -g
