@@ -118,6 +118,7 @@ _prep_install(){
 
     # install pm2 
     npm install pm2 -g
+    env PATH=$PATH:/usr/bin /usr/local/lib/node_modules/pm2/bin/pm2 startup systemd -u ronindojo --hp /home/ronindojo
         
     # install docker
     # Add Docker's official GPG key:
