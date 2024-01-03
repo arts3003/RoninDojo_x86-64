@@ -23,7 +23,6 @@ LOCALE="en_US.UTF-8"
 HOSTNAME="RoninDojo"
 KEYMAP="us"
 
-
 _create_oem_install() {
     pam-auth-update --package	
     # Setting root password
@@ -69,7 +68,13 @@ EOF
     # Setting hostname to $HOSTNAME
     hostnamectl set-hostname $HOSTNAME &>/dev/null
 
+    # Resizing partition
+    resize-fs &>/dev/null
+
     loadkeys "$KEYMAP"
+
+    # Configuration complete. Cleaning up
+    #rm /root/.bash_profile
 
     # Avahi setup
     sed -i 's/hosts: .*$/hosts: files mdns_minimal [NOTFOUND=return] resolve [!UNAVAIL=return] dns mdns/' /etc/nsswitch.conf
@@ -82,13 +87,13 @@ EOF
     sed -i -e "s/PermitRootLogin yes/#PermitRootLogin prohibit-password/" \
         -e "s/PermitEmptyPasswords yes/#PermitEmptyPasswords no/" /etc/ssh/sshd_config
 
-    # Enable password less sudo
-    test -d /etc/sudoers.d || mkdir /etc/sudoers.d
-    echo "${USER} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ronindojo.override
-    sed -i '/ronindojo/s/ALL) ALL/ALL) NOPASSWD:ALL/' /etc/sudoers # change to no password
-    
+    # Set sudo timeout to 1 hour
+    sed -i '/env_reset/a Defaults\ttimestamp_timeout=60' /etc/sudoers
 
-    echo -e "domain .local\nnameserver 1.1.1.1\nnameserver 1.0.0.1" >> /etc/resolv.conf
+    # Enable passwordless sudo
+    sed -i '/ronindojo/s/ALL) ALL/ALL) NOPASSWD:ALL/' /etc/sudoers # change to no password
+
+    #echo -e "domain .local\nnameserver 1.1.1.1\nnameserver 1.0.0.1" >> /etc/resolv.conf
     
     # Setup logs for outputs
     mkdir -p /home/ronindojo/.logs
@@ -98,12 +103,18 @@ EOF
 }
 
 
+
 # Installs Nodejs, docker, docker-compose, and pm2. Clones the RoninDojo repo. This is needed due to some out dated packages in the default debian package manager.
 _prep_install(){
     # install Nodejs
-    curl -sL https://deb.nodesource.com/setup_16.x | bash -
     apt-get update
-    apt-get install -y nodejs
+    apt-get install -y ca-certificates curl gnupg
+    mkdir -p /etc/apt/keyrings
+    curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+    NODE_MAJOR=16
+    echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+    apt-get update
+    apt-get install nodejs -y
 
     # install pm2 
     npm install pm2 -g
@@ -184,6 +195,7 @@ _rand_passwd() {
     tr -dc 'a-zA-Z0-9' </dev/urandom | head -c"${_length}"
 }
 
+
 # Install Ronin UI. This function is the same we utilize in the RoninDojo repo. Only modifying slightly since this runs during build and not organic setup.
 _install_ronin_ui(){
 
@@ -196,6 +208,7 @@ _install_ronin_ui(){
 
     npm i -g pnpm@7 &>/dev/null
 
+    #sudo npm install pm2 -g
 
     test -d /home/ronindojo/Ronin-UI || mkdir /home/ronindojo/Ronin-UI
     cd /home/ronindojo/Ronin-UI || exit
@@ -259,12 +272,17 @@ _service_checks(){
 }
 
 
+
 # This installs all required packages needed for RoninDojo. Clones the RoninOS repo so it can be copied to appropriate locations. Then runs all the functions defined above.
 # ***********************************************************
 main(){
     # install dependencies
+
+    echo "deb http://deb.debian.org/debian bullseye-backports main contrib non-free" | tee -a /etc/apt/sources.list
+    echo "deb-src http://deb.debian.org/debian bullseye-backports main contrib non-free" | tee -a /etc/apt/sources.list
+    
     apt-get update
-    apt-get install -y man-db git avahi-daemon nginx openjdk-11-jdk tor fail2ban net-tools htop unzip wget ufw rsync jq python3 python3-pip pipenv gdisk gcc curl apparmor ca-certificates gnupg lsb-release dialog bpytop
+    apt-get install -y man-db git avahi-daemon nginx tor openjdk-11-jdk fail2ban net-tools htop unzip wget ufw rsync jq python3 python3-pip pipenv gdisk gcc curl apparmor ca-certificates gnupg lsb-release dialog bpytop
     
     # clone the original RoninOS
     git clone https://code.samourai.io/ronindojo/RoninOS.git /tmp/RoninOS
@@ -279,22 +297,16 @@ main(){
         exit 1;
     else 
         echo "Setup service is PRESENT! Keep going!"
-
         _create_oem_install
         _prep_install
         _prep_tor
-
-        #usermod -aG pm2 ronindojo
+        usermod -aG pm2 ronindojo
         mkdir -p /usr/share/nginx/logs
         rm -rf /etc/nginx/sites-enabled/default
-
         _install_ronin_ui
-
         usermod -aG docker ronindojo
-        #systemctl enable oem-boot.service
-
+        systemctl enable oem-boot.service
         _service_checks
-
         echo "Setup is complete"
     fi
 }
