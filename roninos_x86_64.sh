@@ -225,7 +225,7 @@ _install_ronin_ui(){
         echo "Ronin UI archive verification failed! Valid sum is ${_shasum}, got ${_bad_shasum} instead..."
     fi
       
-    tar xzf "$_file"
+    tar -xvzf "$_file" 2>/dev/null
 
     rm "$_file" /tmp/version.json
 
@@ -300,7 +300,6 @@ main(){
         _create_oem_install
         _prep_install
         _prep_tor
-        usermod -aG pm2 ronindojo
         mkdir -p /usr/share/nginx/logs
         rm -rf /etc/nginx/sites-enabled/default
         _install_ronin_ui
