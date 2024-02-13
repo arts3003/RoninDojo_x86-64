@@ -137,7 +137,7 @@ _prep_install(){
     apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
     # install docker-compose
-    curl -L https://github.com/docker/compose/releases/download/v2.23.3/docker-compose-linux-x86_64 -o /usr/bin/docker-compose    
+    curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-Linux-x86_64 -o /usr/bin/docker-compose    
     chmod +x /usr/bin/docker-compose
 
 }
