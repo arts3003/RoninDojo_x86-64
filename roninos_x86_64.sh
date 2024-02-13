@@ -136,7 +136,7 @@ _prep_install(){
     apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
     # install docker-compose
-    curl -L https://github.com/docker/compose/releases/download/v2.21.0/docker-compose-linux-x86_64 -o /usr/bin/docker-compose    
+    curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-Linux-x86_64 -o /usr/bin/docker-compose    
     chmod +x /usr/bin/docker-compose
 
 }
@@ -282,7 +282,7 @@ main(){
     echo "deb-src http://deb.debian.org/debian bullseye-backports main contrib non-free" | tee -a /etc/apt/sources.list
     
     apt-get update
-    apt-get install -y man-db git avahi-daemon nginx tor openjdk-11-jdk fail2ban net-tools htop unzip wget ufw rsync jq python3 python3-pip pipenv gdisk gcc curl apparmor ca-certificates gnupg lsb-release dialog bpytop
+    apt-get install -y man-db git avahi-daemon nginx tor openjdk-17-jdk fail2ban net-tools htop unzip wget ufw rsync jq python3 python3-pip pipenv gdisk gcc curl apparmor ca-certificates gnupg lsb-release dialog bpytop
     
     # clone the original RoninOS
     git clone https://code.samourai.io/ronindojo/RoninOS.git /tmp/RoninOS
