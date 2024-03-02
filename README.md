@@ -42,10 +42,15 @@ A modo de ejemplo, pongo dos modelos de configuración, uno válido y el otro no
 
 
 
-## Paso 1 - Flashear USB con Debian 11.x
-- Descargar la imagen de Linux Debian 11.x (actualmente 11.8)
+## Paso 1 - Flashear USB con Debian 11.x (o Debian 12.x)
+Descarga solo una de las dos versiones, decide entre la version 11 o la version 12 (la actual)
+- Descargar la imagen de Linux Debian 11.x (actualmente 11.9)
 ```
-https://cdimage.debian.org/mirror/cdimage/archive/11.8.0/amd64/iso-cd/debian-11.8.0-amd64-netinst.iso
+https://cdimage.debian.org/mirror/cdimage/archive/11.9.0/amd64/iso-cd/debian-11.9.0-amd64-netinst.iso
+```
+- Descargar la imagen de Linux Debian 12.x
+```
+https://cdimage.debian.org/mirror/cdimage/archive/12.4.0/amd64/iso-cd/debian-12.4.0-amd64-netinst.iso
 ```
 - Descargar rufus USB o balena etcher para flashear la imagen de debian en el USB
 ```
@@ -60,7 +65,7 @@ Aqui el video con todo detalle:
 https://youtu.be/xr9V_mNZw_I
 
 
-## Paso 2 - Instalar Debian 11.x
+## Paso 2 - Instalar Debian 11.x (o Debian 12.x)
 Iniciar la máquina con el dispositivo USB y elegir instalación grafica, los puntos importantes en la instalación son:
 - Nombre de equipo: RoninDojo
 - Crear usuario "nodo" con password "nodo" (luego podrás cambiar el password por uno personalizado)
@@ -89,16 +94,20 @@ Puedes ver todo el proceso de instalación detallado en este video:
 https://youtu.be/4SszxjOJg9M
 
 ## Paso 3 - Ejecutar script RoninOS para x86-64
-Para iniciar la instalación de adaptación del sistema a RoninDojo, debemos ejecutar un preinstalación, lo haremos con ejecutando la siguiente linea
+Para iniciar la instalación de adaptación del sistema a RoninDojo, debemos ejecutar una preinstalación, lo haremos ejecutando la siguiente línea y desde el usuario "nodo", presta atención y ejecuta solo la linea del sistema operativo que tienes, version 11.x o version 12.x:
+- Para Linux Debian 11.x
 ```
 sudo -v && curl -L https://raw.githubusercontent.com/albercoin/RoninDojo_x86-64/main/roninos_x86_64.sh | sudo bash | tee roninos-debug.log
+```
+- Para Linux Debian 12.x
+```
+sudo -v && curl -L https://raw.githubusercontent.com/albercoin/RoninDojo_x86-64/main/roninos_x86_64_debian12_beta01.sh.sh | sudo bash | tee roninos-debug.log
 ```
 Esto ejecuta el script y se genera el fichero roninos-debug.log con los detalles de la ejecución del script para su revisión en caso de haber algún problema.
 se puede leer el fichero con el siguiente comando:
 ```
 more roninos-debug.log
 ```
-
 
 ## Paso 4 - Iniciar el servicio de Instalación RoninDojo
 Una vez finalizado el script de preinstalación, hay que activar un servicio para iniciar la instalación (también vale reiniciando la máquina)
