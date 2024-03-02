@@ -101,7 +101,7 @@ sudo -v && curl -L https://raw.githubusercontent.com/albercoin/RoninDojo_x86-64/
 ```
 - Para Linux Debian 12.x
 ```
-sudo -v && curl -L https://raw.githubusercontent.com/albercoin/RoninDojo_x86-64/main/roninos_x86_64_debian12_beta01.sh.sh | sudo bash | tee roninos-debug.log
+sudo -v && curl -L https://raw.githubusercontent.com/albercoin/RoninDojo_x86-64/main/roninos_x86_64_debian12_beta01.sh | sudo bash | tee roninos-debug.log
 ```
 Esto ejecuta el script y se genera el fichero roninos-debug.log con los detalles de la ejecución del script para su revisión en caso de haber algún problema.
 se puede leer el fichero con el siguiente comando:
